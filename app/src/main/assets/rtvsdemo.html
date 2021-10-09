@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CvNetVideo_js_1.3.0控件测试</title>
+    <script type="text/javascript" src="https://lib.cvtsp.com/video/CVNetVideoJs/1.3.0/CvNetVideo.js"></script>
+
+</head>
+
+<body>
+<div id="player" style="width:1200px;height:982px;background:rgb(0, 0, 0);">
+    <script>
+
+        window.onload = function () {
+            ijk.log(CvNetVideo.version);
+            init();
+
+        };
+        function onHlsPlay(id, ucVideo, hlshttp, hlshttps, rtmpurl, cid) {
+            ijk.play(rtmpurl);
+            //console.log(hlshttp, hlshttps, rtmpurl, cid);
+
+			return  true;
+        }
+        var uc1;
+        function init() {
+            uc1 = CvNetVideo.Init(document.querySelector("#player"), 1,
+                {
+                networkSpeaking:false,
+                    //事件通知
+                    events: {
+                        //HLS模式播放前通知 可获取RTMP HLS 等URL
+                        onHlsPlay: onHlsPlay
+                    }
+                });
+        }
+
+        //实时流
+        function Connect(sim,channel,streamType,mideaType,server,port,protocol) {
+            CvNetVideo.StartRealTimeVideo(
+			    sim,
+                channel,
+                streamType,
+                mideaType,
+                0,
+                {
+                    clusterHost: server,
+                    clusterPort: port,
+                    protocol: protocol
+                },
+                null,
+				6);
+        }
+
+    </script>
+</div>
+</body>
+</html>
